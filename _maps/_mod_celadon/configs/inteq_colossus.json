@@ -6,6 +6,8 @@
 	"map_path": "_maps/_mod_celadon/shuttles/inteq/inteq_colossus.dmm",
 	"enabled": true,
 	"limit": 1,
+	"tranist_x_offset": -20,
+	"tranist_y_offset": -30,
 	"sensor_range": 5,
 	"prefix": "BIQSV",
 	"faction": "/datum/faction/inteq",

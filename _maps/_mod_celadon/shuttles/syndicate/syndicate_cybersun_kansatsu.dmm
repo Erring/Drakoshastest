@@ -60,9 +60,12 @@
 /area/ship/bridge)
 "dh" = (
 /obj/docking_port/stationary{
-	dwidth = 15;
-	height = 15;
-	width = 30
+	dheight = 1;
+	disable_on_owner_ship_dock = 1;
+	dwidth = 20;
+	height = 31;
+	name = "Kant Port Dock";
+	width = 40
 	},
 /turf/template_noop,
 /area/template_noop)

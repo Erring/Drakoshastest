@@ -675,7 +675,12 @@
 /area/ship/engineering/electrical)
 "ix" = (
 /obj/docking_port/stationary{
-	dir = 4
+	dheight = 1;
+	dir = 4;
+	dwidth = 9;
+	height = 30;
+	name = "Savior Dock";
+	width = 20
 	},
 /turf/template_noop,
 /area/template_noop)
@@ -2085,14 +2090,16 @@
 /turf/open/floor/plasteel/white,
 /area/ship/medical/surgery)
 "Ba" = (
-/obj/docking_port/mobile{
-	dir = 2;
-	preferred_direction = 4;
-	set_dir_on_move = 4;
-	port_direction = 8
+/obj/effect/turf_decal/industrial/warning{
+	dir = 8
 	},
-/turf/closed/wall/mineral/titanium/nodiagonal,
-/area/ship/bridge)
+/obj/docking_port/mobile{
+	dir = 8;
+	launch_status = 0;
+	preferred_direction = 4
+	},
+/turf/open/floor/engine/hull,
+/area/ship/external)
 "Bd" = (
 /obj/structure/cable{
 	icon_state = "1-2"
@@ -4693,7 +4700,7 @@ Jz
 Jz
 Jz
 Jz
-Ba
+PH
 go
 bN
 ko
@@ -4788,7 +4795,7 @@ Jz
 Jz
 Ul
 Xb
-Mp
+Ba
 Mp
 Xb
 Ul

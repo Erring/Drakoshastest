@@ -765,17 +765,6 @@
 /obj/structure/catwalk/over/plated_catwalk/dark,
 /turf/open/floor/plating,
 /area/ship/engineering/engine)
-"eY" = (
-/obj/docking_port/stationary{
-	width = 30;
-	height = 15;
-	dwidth = 15;
-	name = "Caliban Starboard Bay";
-	dir = 2;
-	disable_on_owner_ship_dock = 1
-	},
-/turf/template_noop,
-/area/template_noop)
 "ff" = (
 /obj/structure/chair/office,
 /obj/effect/turf_decal/corner/opaque/brown/full,
@@ -3576,16 +3565,10 @@
 /obj/structure/cable{
 	icon_state = "4-8"
 	},
-/obj/effect/turf_decal/corner_steel_grid{
-	dir = 10
-	},
-/obj/effect/turf_decal/trimline/opaque/yellow/warning{
-	dir = 2;
-	layer = 2.039
-	},
 /obj/machinery/atmospherics/pipe/simple/purple/visible/layer5{
 	dir = 10
 	},
+/obj/effect/turf_decal/trimline/opaque/yellow/line,
 /turf/open/floor/plasteel/tech,
 /area/ship/engineering/engine)
 "rZ" = (
@@ -5474,7 +5457,13 @@
 /obj/structure/cable{
 	icon_state = "4-8"
 	},
-/obj/effect/turf_decal/trimline/opaque/yellow/line,
+/obj/effect/turf_decal/corner_steel_grid{
+	dir = 10
+	},
+/obj/effect/turf_decal/trimline/opaque/yellow/warning{
+	dir = 2;
+	layer = 2.039
+	},
 /turf/open/floor/plasteel/tech,
 /area/ship/engineering/engine)
 "BL" = (
@@ -6132,6 +6121,10 @@
 	req_access_txt = "56"
 	},
 /obj/structure/catwalk/over,
+/obj/effect/turf_decal/industrial/fire/corner{
+	color = "#730622";
+	dir = 1
+	},
 /turf/open/floor/plating,
 /area/ship/engineering/engine)
 "Fl" = (
@@ -7043,7 +7036,9 @@
 /obj/structure/table,
 /obj/structure/bedsheetbin,
 /obj/effect/turf_decal/corner/transparent/black/mono,
-/obj/effect/turf_decal/industrial/fire/corner,
+/obj/effect/turf_decal/industrial/fire/corner{
+	color = "#730622"
+	},
 /obj/effect/turf_decal/techfloor{
 	dir = 1
 	},
@@ -7172,6 +7167,15 @@
 /obj/structure/sign/warning/vacuum/external{
 	pixel_x = 32;
 	pixel_y = 22
+	},
+/obj/docking_port/stationary{
+	width = 40;
+	height = 15;
+	dwidth = 20;
+	name = "Caliban Starboard Bay";
+	dir = 2;
+	disable_on_owner_ship_dock = 1;
+	dheight = 1
 	},
 /turf/open/floor/engine/hull/reinforced,
 /area/ship/external/dark)
@@ -7878,10 +7882,11 @@
 /area/ship/crew/canteen)
 "Qm" = (
 /obj/docking_port/stationary{
-	width = 30;
-	height = 15;
-	dwidth = 15;
-	name = "Caliban Port Bay"
+	width = 40;
+	height = 30;
+	dwidth = 20;
+	name = "Caliban Port Bay";
+	dheight = 1
 	},
 /turf/open/floor/engine/hull/reinforced,
 /area/ship/external/dark)
@@ -10723,7 +10728,7 @@ ab
 aD
 WF
 Lu
-eY
+sw
 "}
 (38,1,1) = {"
 sw

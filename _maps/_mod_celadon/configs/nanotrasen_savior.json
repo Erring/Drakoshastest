@@ -6,6 +6,8 @@
 	"map_path": "_maps/_mod_celadon/shuttles/nanotrasen/nanotrasen_savior.dmm",
 	"enabled": true,
 	"limit": 1,
+	"tranist_x_offset": -25,
+	"tranist_y_offset": -10,
 	"sensor_range": 5,
 	"prefix": "NTMSV",
 	"faction": "/datum/faction/nt",

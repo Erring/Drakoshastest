@@ -53,6 +53,16 @@
 /obj/item/stack/sheet/mineral/plasma/twenty,
 /turf/open/floor/plasteel/tech/grid,
 /area/ship/engineering)
+"bz" = (
+/obj/docking_port/stationary{
+	dwidth = 10;
+	width = 15;
+	height = 15;
+	dir = 2;
+	name = "Darect Starboard Dock"
+	},
+/turf/template_noop,
+/area/template_noop)
 "bA" = (
 /turf/template_noop,
 /area/template_noop)
@@ -1238,6 +1248,17 @@
 	},
 /turf/closed/wall/mineral/titanium/nodiagonal,
 /area/ship/engineering)
+"uv" = (
+/obj/docking_port/stationary{
+	dheight = 1;
+	disable_on_owner_ship_dock = 1;
+	dwidth = 20;
+	height = 31;
+	name = "Darect Port Dock";
+	width = 40
+	},
+/turf/template_noop,
+/area/template_noop)
 "uF" = (
 /turf/closed/wall/mineral/titanium/nodiagonal,
 /area/ship/medical)
@@ -1249,14 +1270,12 @@
 /turf/closed/wall/mineral/titanium,
 /area/ship/bridge)
 "vo" = (
-/obj/docking_port/stationary{
-	dwidth = 4;
-	width = 15;
-	height = 15;
-	dir = 2
+/obj/effect/turf_decal/techfloor{
+	dir = 1
 	},
-/turf/template_noop,
-/area/template_noop)
+/obj/effect/turf_decal/siding/wideplating,
+/turf/open/floor/engine/hull,
+/area/ship/external)
 "vM" = (
 /obj/structure/sign/nanotrasen/vigilitas,
 /turf/closed/wall/mineral/titanium/nodiagonal,
@@ -1535,16 +1554,12 @@
 /turf/open/floor/wood,
 /area/ship/crew/canteen)
 "Bg" = (
-/obj/effect/decal/cleanable/dirt,
-/obj/docking_port/mobile{
-	can_move_docking_ports = 1;
-	dir = 2;
-	launch_status = 0;
-	port_direction = 8;
-	preferred_direction = 4
+/obj/machinery/porta_turret/ship/nt{
+	dir = 10;
+	id = "darect_turrets"
 	},
-/turf/closed/wall/mineral/titanium/nodiagonal,
-/area/ship/medical)
+/turf/closed/wall/mineral/titanium,
+/area/ship/crew/canteen)
 "Bk" = (
 /turf/closed/wall/mineral/titanium/nodiagonal,
 /area/ship/crew/canteen)
@@ -1823,6 +1838,13 @@
 /obj/machinery/door/poddoor{
 	id = "darect_cargodoors"
 	},
+/obj/docking_port/mobile{
+	can_move_docking_ports = 1;
+	dir = 2;
+	launch_status = 0;
+	port_direction = 8;
+	preferred_direction = 4
+	},
 /turf/open/floor/engine,
 /area/ship/cargo)
 "EW" = (
@@ -1831,7 +1853,7 @@
 	id = "darect_turrets"
 	},
 /turf/closed/wall/mineral/titanium,
-/area/ship/bridge)
+/area/ship/crew)
 "Fu" = (
 /obj/effect/decal/cleanable/dirt/dust,
 /obj/machinery/atmospherics/pipe/manifold/scrubbers/hidden/layer4{
@@ -1889,7 +1911,7 @@
 	id = "darect_turrets"
 	},
 /turf/closed/wall/mineral/titanium,
-/area/ship/bridge)
+/area/ship/engineering)
 "FW" = (
 /obj/machinery/atmospherics/components/unary/outlet_injector/on/layer4{
 	dir = 1
@@ -1945,7 +1967,7 @@
 	id = "darect_turrets"
 	},
 /turf/closed/wall/mineral/titanium,
-/area/ship/bridge)
+/area/ship/security/armory)
 "Gv" = (
 /obj/machinery/power/shieldwallgen/atmos/roundstart{
 	dir = 4;
@@ -2870,7 +2892,7 @@
 	id = "darect_turrets"
 	},
 /turf/closed/wall/mineral/titanium,
-/area/ship/bridge)
+/area/ship/engineering)
 "Zh" = (
 /obj/effect/turf_decal/techfloor{
 	dir = 6
@@ -2895,6 +2917,7 @@ bA
 bA
 bA
 bA
+bA
 Yu
 Zt
 To
@@ -2907,6 +2930,7 @@ bA
 bA
 "}
 (2,1,1) = {"
+bA
 bA
 bA
 bA
@@ -2926,6 +2950,7 @@ bA
 bA
 bA
 bA
+bA
 FR
 IX
 WY
@@ -2939,6 +2964,7 @@ bA
 bA
 "}
 (4,1,1) = {"
+bA
 bA
 bA
 bA
@@ -2958,6 +2984,7 @@ bA
 bA
 bA
 bA
+bA
 IX
 kR
 XU
@@ -2971,6 +2998,7 @@ bA
 bA
 "}
 (6,1,1) = {"
+bA
 bA
 bA
 OG
@@ -2988,6 +3016,7 @@ bA
 "}
 (7,1,1) = {"
 bA
+bA
 wP
 uF
 Kz
@@ -3003,6 +3032,7 @@ WR
 bA
 "}
 (8,1,1) = {"
+bA
 bA
 QY
 iV
@@ -3020,7 +3050,8 @@ bA
 "}
 (9,1,1) = {"
 bA
-Bg
+bA
+QY
 Ip
 Ua
 Uq
@@ -3035,6 +3066,7 @@ Mu
 bA
 "}
 (10,1,1) = {"
+bA
 bA
 QY
 Ju
@@ -3052,6 +3084,7 @@ bA
 "}
 (11,1,1) = {"
 bA
+bA
 Uy
 Uy
 Uy
@@ -3067,6 +3100,7 @@ Bk
 bA
 "}
 (12,1,1) = {"
+bA
 Yc
 Uy
 eE
@@ -3080,9 +3114,10 @@ DS
 Co
 ze
 Bk
-YT
+Bg
 "}
 (13,1,1) = {"
+bA
 Gv
 YE
 Cm
@@ -3099,6 +3134,7 @@ vO
 Bk
 "}
 (14,1,1) = {"
+bA
 pN
 TS
 WW
@@ -3115,6 +3151,7 @@ Jo
 Bk
 "}
 (15,1,1) = {"
+uv
 ER
 cx
 hY
@@ -3131,6 +3168,7 @@ eb
 Bk
 "}
 (16,1,1) = {"
+bA
 nG
 Uy
 BE
@@ -3148,6 +3186,7 @@ Gu
 "}
 (17,1,1) = {"
 bA
+bA
 Uy
 Uy
 Uy
@@ -3163,6 +3202,7 @@ tt
 bA
 "}
 (18,1,1) = {"
+bA
 bA
 Sn
 BG
@@ -3180,6 +3220,7 @@ bA
 "}
 (19,1,1) = {"
 bA
+bA
 Ds
 dJ
 jF
@@ -3196,6 +3237,7 @@ bA
 "}
 (20,1,1) = {"
 bA
+bA
 zF
 ka
 Ea
@@ -3211,6 +3253,7 @@ vM
 bA
 "}
 (21,1,1) = {"
+bA
 bA
 EW
 Sn
@@ -3229,6 +3272,7 @@ bA
 (22,1,1) = {"
 bA
 bA
+bA
 Gf
 qN
 MA
@@ -3240,9 +3284,10 @@ rL
 Hw
 UP
 vo
-bA
+bz
 "}
 (23,1,1) = {"
+bA
 bA
 bA
 cR
@@ -3261,6 +3306,7 @@ bA
 (24,1,1) = {"
 bA
 bA
+bA
 rk
 gH
 Fy
@@ -3277,6 +3323,7 @@ bA
 (25,1,1) = {"
 bA
 bA
+bA
 rk
 zv
 cC
@@ -3291,6 +3338,7 @@ bA
 bA
 "}
 (26,1,1) = {"
+bA
 bA
 bA
 EO
@@ -3310,6 +3358,7 @@ bA
 bA
 bA
 bA
+bA
 EO
 cR
 cR
@@ -3323,6 +3372,7 @@ bA
 bA
 "}
 (28,1,1) = {"
+bA
 bA
 bA
 bA

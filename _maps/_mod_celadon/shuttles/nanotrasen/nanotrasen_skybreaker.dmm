@@ -233,6 +233,11 @@
 /obj/machinery/door/poddoor{
 	id = "skybreaker_poddor1"
 	},
+/obj/docking_port/mobile{
+	name = "skybreaker dock";
+	port_direction = 4;
+	preferred_direction = 4
+	},
 /turf/open/floor/plasteel/tech,
 /area/ship/science/robotics)
 "cD" = (
@@ -345,12 +350,6 @@
 	},
 /obj/machinery/atmospherics/pipe/layer_manifold/visible{
 	dir = 4
-	},
-/obj/docking_port/mobile{
-	dir = 4;
-	launch_status = 0;
-	preferred_direction = 4;
-	port_direction = 2
 	},
 /obj/machinery/door/poddoor/shutters{
 	dir = 4;
@@ -3452,7 +3451,13 @@
 /turf/open/floor/plasteel/lightgrey,
 /area/ship/hallway/central)
 "Og" = (
-/obj/docking_port/stationary,
+/obj/docking_port/stationary{
+	dheight = 1;
+	dwidth = 20;
+	height = 31;
+	name = "Skybreaker Port Dock";
+	width = 40
+	},
 /turf/template_noop,
 /area/template_noop)
 "Oz" = (
@@ -3970,10 +3975,13 @@
 /area/ship/security)
 "Vo" = (
 /obj/docking_port/stationary{
-	dwidth = 15;
-	width = 30;
-	height = 15;
-	dir = 2
+	dheight = 1;
+	dir = 2;
+	dwidth = 20;
+	height = 30;
+	name = "Skybreaker Starboard Dock";
+	width = 40;
+	disable_on_owner_ship_dock = 1
 	},
 /turf/template_noop,
 /area/template_noop)

@@ -520,6 +520,17 @@
 	},
 /turf/open/floor/plating,
 /area/ship/crew)
+"kJ" = (
+/obj/docking_port/stationary{
+	dheight = 1;
+	dir = 4;
+	dwidth = 10;
+	height = 30;
+	name = "Beetle Nose Dock";
+	width = 20
+	},
+/turf/template_noop,
+/area/template_noop)
 "kU" = (
 /turf/closed/wall/mineral/plastitanium,
 /area/ship/crew)
@@ -647,15 +658,17 @@
 /turf/closed/wall/mineral/plastitanium/nodiagonal,
 /area/ship/hallway/central)
 "mt" = (
-/obj/effect/turf_decal/corner/opaque/syndiered/half,
 /obj/docking_port/stationary{
-	dwidth = 4;
-	width = 15;
-	height = 15;
-	dir = 2
+	dheight = 1;
+	dir = 2;
+	dwidth = 20;
+	height = 30;
+	name = "Beetle Starboard Dock";
+	width = 40;
+	disable_on_owner_ship_dock = 1
 	},
-/turf/open/floor/engine/hull/reinforced,
-/area/ship/external)
+/turf/template_noop,
+/area/template_noop)
 "mG" = (
 /obj/effect/turf_decal/corner/opaque/black/half{
 	dir = 8
@@ -730,17 +743,13 @@
 /turf/open/floor/plasteel/tech/grid,
 /area/ship/engineering)
 "nS" = (
-/obj/effect/turf_decal/industrial/warning{
-	dir = 1
-	},
 /obj/docking_port/mobile{
-	callTime = 250;
-	launch_status = 0;
+	name = "beetle dock";
 	port_direction = 4;
 	preferred_direction = 4
 	},
-/turf/open/floor/engine/hull/reinforced,
-/area/ship/external)
+/turf/closed/wall/mineral/plastitanium,
+/area/ship/external/dark)
 "nV" = (
 /obj/effect/turf_decal/industrial/fire/cee,
 /obj/effect/turf_decal/siding/thinplating/dark/end,
@@ -3514,7 +3523,7 @@ TS
 OP
 ms
 Ks
-mt
+BW
 ta
 ta
 "}
@@ -3535,9 +3544,9 @@ sZ
 Iv
 YP
 cs
-nS
+Ks
 BW
-ta
+mt
 ta
 "}
 (15,1,1) = {"
@@ -3604,7 +3613,7 @@ Op
 Nv
 kU
 Cv
-aU
+nS
 "}
 (18,1,1) = {"
 aU
@@ -3773,6 +3782,28 @@ BC
 BC
 BC
 BC
+ta
+ta
+ta
+ta
+ta
+ta
+ta
+ta
+"}
+(26,1,1) = {"
+ta
+ta
+ta
+ta
+ta
+ta
+ta
+ta
+ta
+kJ
+ta
+ta
 ta
 ta
 ta

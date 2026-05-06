@@ -5104,10 +5104,12 @@
 /area/ship/engineering/atmospherics)
 "PL" = (
 /obj/docking_port/stationary{
-	dwidth = 3;
-	width = 7;
-	height = 15;
-	dir = 2
+	dheight = 1;
+	dir = 2;
+	dwidth = 5;
+	height = 30;
+	name = "Lugol Starboard Dock";
+	width = 30
 	},
 /turf/template_noop,
 /area/template_noop)
@@ -6720,7 +6722,7 @@ ZW
 tN
 Eo
 cR
-kD
+PL
 kD
 "}
 (14,1,1) = {"
@@ -6753,7 +6755,7 @@ Nn
 YB
 Sn
 rD
-PL
+kD
 kD
 "}
 (15,1,1) = {"

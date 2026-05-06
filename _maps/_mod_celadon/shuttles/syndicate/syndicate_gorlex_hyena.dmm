@@ -595,9 +595,12 @@
 /area/ship/bridge)
 "kR" = (
 /obj/docking_port/stationary{
-	dwidth = 10;
-	height = 15;
-	width = 30
+	dheight = 1;
+	disable_on_owner_ship_dock = 1;
+	dwidth = 20;
+	height = 31;
+	name = "Hyena Port Dock";
+	width = 40
 	},
 /turf/template_noop,
 /area/template_noop)
@@ -1983,6 +1986,13 @@
 	},
 /obj/effect/mapping_helpers/airlock/cyclelink_helper,
 /obj/effect/turf_decal/industrial/warning/fulltile,
+/obj/docking_port/mobile{
+	dir = 2;
+	launch_status = 0;
+	name = "Hyena-class";
+	port_direction = 8;
+	preferred_direction = 4
+	},
 /turf/open/floor/plasteel/tech,
 /area/ship/hallway/central)
 "Gw" = (
@@ -2380,21 +2390,16 @@
 /turf/open/floor/plating,
 /area/ship/cargo)
 "NS" = (
-/obj/effect/turf_decal/industrial/warning/fulltile,
-/obj/machinery/door/poddoor{
+/obj/docking_port/stationary{
+	dheight = 1;
 	dir = 4;
-	id = "wreckercargobay";
-	name = "Cargo Bay Exterior Blast Door"
+	dwidth = 9;
+	height = 30;
+	name = "Beetle Nose Dock";
+	width = 20
 	},
-/obj/docking_port/mobile{
-	can_move_docking_ports = 1;
-	dir = 8;
-	launch_status = 0;
-	name = "mining ship";
-	preferred_direction = 4
-	},
-/turf/open/floor/plating,
-/area/ship/cargo)
+/turf/template_noop,
+/area/template_noop)
 "Ok" = (
 /obj/structure/cable{
 	icon_state = "1-2"
@@ -3813,7 +3818,7 @@ NF
 ji
 so
 JS
-NS
+JS
 sx
 NN
 mL
@@ -3834,7 +3839,7 @@ nn
 nn
 nn
 nn
-nn
+NS
 nn
 nn
 oO
