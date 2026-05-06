@@ -9,6 +9,57 @@
 	pocket_storage_component_path = /datum/component/storage/concrete/pockets/exo/large
 	resistance_flags = FIRE_PROOF
 
+/obj/item/clothing/suit/space/engineertest
+	name = "engineering space suit"
+	icon_state = "space-independent-eng"
+	item_state = "space-independent-eng"
+	desc = "A civilian space suit designed for construction and salvage in hazardous, low-pressure environments. Has shielding against radiation and heat and abundant storage.<br>Though they lack the physical protection of more expensive hardsuits, this type of suit is extremely common wherever construction and salvage work must be done in open space."
+	siemens_coefficient = 0
+	armor = list("melee" = 15, "bullet" = 5, "laser" = 20, "energy" = 10, "bomb" = 20, "bio" = 100, "rad" = 75, "fire" = 100, "acid" = 75, "wound" = 10)
+	pocket_storage_component_path = /datum/component/storage/concrete/pockets/exo/large
+	resistance_flags = FIRE_PROOF
+	body_parts_covered = CHEST|GROIN
+	flags_inv = HIDEJUMPSUIT
+
+/obj/item/clothing/gloves/test
+	name = "MOD gauntlets"
+	desc = "A pair of gauntlets for a MODsuit."
+	icon = 'icons/obj/clothing/modsuit/mod_clothing.dmi'
+	icon_state = "standard-gauntlets"
+	base_icon_state = "gauntlets"
+	mob_overlay_icon = 'icons/mob/clothing/modsuit/mod_clothing.dmi'
+	clothing_flags = STOPSPRESSUREDAMAGE | THICKMATERIAL
+	armor = list("melee" = 0, "bullet" = 0, "laser" = 0,"energy" = 0, "bomb" = 0, "bio" = 100, "rad" = 50, "fire" = 80, "acid" = 70, "wound" = 10)
+	cold_protection = ARMS|HANDS
+	min_cold_protection_temperature = SPACE_SUIT_MIN_TEMP_PROTECT
+	heat_protection = ARMS|HANDS
+	max_heat_protection_temperature = SPACE_SUIT_MAX_TEMP_PROTECT
+	resistance_flags = FIRE_PROOF
+	body_parts_covered = HANDS|ARMS
+
+/obj/item/clothing/shoes/test
+	name = "MOD boots"
+	desc = "A pair of boots for a MODsuit."
+	icon = 'icons/obj/clothing/modsuit/mod_clothing.dmi'
+	icon_state = "standard-boots"
+	base_icon_state = "boots"
+	mob_overlay_icon = 'icons/mob/clothing/modsuit/mod_clothing.dmi'
+	body_parts_covered = LEGS|FEET
+	obj_flags = IMMUTABLE_SLOW
+	clothing_flags = STOPSPRESSUREDAMAGE | THICKMATERIAL
+	armor = list("melee" = 0, "bullet" = 0, "laser" = 0,"energy" = 0, "bomb" = 0, "bio" = 100, "rad" = 50, "fire" = 80, "acid" = 70, "wound" = 10)
+	cold_protection = LEGS|FEET
+	min_cold_protection_temperature = SPACE_SUIT_MIN_TEMP_PROTECT
+	heat_protection = LEGS|FEET
+	max_heat_protection_temperature = SPACE_SUIT_MAX_TEMP_PROTECT
+	resistance_flags = FIRE_PROOF
+	equipping_sound = null
+	unequipping_sound = null
+	equip_delay_self = null
+	strip_delay = null
+	equip_self_flags = null
+
+
 /obj/item/clothing/head/helmet/space/light/engineer
 	name = "engineering space helmet"
 	icon_state = "space-independent-eng"

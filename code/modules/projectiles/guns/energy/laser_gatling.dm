@@ -16,7 +16,7 @@
 	var/armed = 0 //whether the gun is attached, 0 is attached, 1 is the gun is wielded.
 	var/overheat = 0
 	var/overheat_max = 40
-	var/heat_diffusion = 1
+	var/heat_diffusion = 4
 	var/spawn_with_gun = TRUE
 
 /obj/item/minigunpack/Initialize()
@@ -114,7 +114,7 @@
 
 	gun_firemodes = list(FIREMODE_FULLAUTO)
 	default_firemode = FIREMODE_FULLAUTO
-
+	internal_magazine = TRUE
 	slot_flags = null
 	w_class = WEIGHT_CLASS_HUGE
 	custom_materials = null

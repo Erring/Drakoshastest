@@ -311,8 +311,8 @@
 				UNSEALED_LAYER = null,
 				UNSEALED_CLOTHING = SNUG_FIT|THICKMATERIAL,
 				SEALED_CLOTHING = STOPSPRESSUREDAMAGE|ALLOWINTERNALS,
-				UNSEALED_INVISIBILITY = HIDEFACIALHAIR|HIDEEARS|HIDEHAIR|HIDESNOUT,
-				SEALED_INVISIBILITY = HIDEMASK|HIDEEYES|HIDEFACE,
+				UNSEALED_INVISIBILITY = HIDEFACIALHAIR,
+				SEALED_INVISIBILITY = HIDEMASK|HIDEEYES|HIDEFACE|HIDEEARS|HIDEHAIR|HIDESNOUT,
 				SEALED_COVER = HEADCOVERSMOUTH|HEADCOVERSEYES|PEPPERPROOF,
 			),
 			CHESTPLATE_FLAGS = list(
@@ -339,7 +339,7 @@
 /datum/mod_theme/falke
 	name = "Falke"
 	default_skin = "falke"
-	armor = list("melee" = 70, "bullet" = 60, "laser" = 50, "energy" = 60, "bomb" = 60, "bio" = 100, "rad" = 70, "fire" = 100, "acid" = 90, "wound" = 60)
+	armor = list("melee" = 70, "bullet" = 60, "laser" = 50, "energy" = 60, "bomb" = 60, "bio" = 100, "rad" = 70, "fire" = 100, "acid" = 100, "wound" = 60)
 	resistance_flags = FIRE_PROOF|ACID_PROOF
 	atom_flags = PREVENT_CONTENTS_EXPLOSION_1
 	max_heat_protection_temperature = FIRE_IMMUNITY_MAX_TEMP_PROTECT

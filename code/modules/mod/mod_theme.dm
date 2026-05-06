@@ -803,7 +803,7 @@
 	default_skin = "elite"
 	// [CELADON-EDIT] - CELADON_MODSUITS
 	// armor = list("melee" = 60, "bullet" = 60, "laser" = 50, "energy" = 60, "bomb" = 55, "bio" = 100, "rad" = 70, "fire" = 100, "acid" = 100)
-	armor = list("melee" = 60, "bullet" = 55, "laser" = 50, "energy" = 60, "bomb" = 55, "bio" = 100, "rad" = 70, "fire" = 100, "acid" = 100, "wound" = 50)
+	armor = list("melee" = 60, "bullet" = 50, "laser" = 50, "energy" = 60, "bomb" = 55, "bio" = 100, "rad" = 70, "fire" = 100, "acid" = 100, "wound" = 50)
 	// [/CELADON-EDIT]
 	resistance_flags = FIRE_PROOF|ACID_PROOF
 	atom_flags = PREVENT_CONTENTS_EXPLOSION_1

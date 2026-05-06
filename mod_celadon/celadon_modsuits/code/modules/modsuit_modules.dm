@@ -233,7 +233,7 @@
 		var/turf/T = pick(anomalies)
 		var/mob/living/user = mod.wearer
 		old_loc = get_turf(user)
-		if(T && prob(90))
+		if(T && prob(10))
 			var/atom/movable/AM = user.pulling
 			if(AM)
 				AM.forceMove(T)
@@ -252,3 +252,292 @@
 		drain_power(use_power_cost)
 		mod.wearer.adjustOrganLoss(ORGAN_SLOT_BRAIN, 1, 150)
 	return
+
+
+//Indexes for the queue
+#define WARP_LOC 1
+#define WARP_DIR 2
+#define WARP_FOOTPRINT 2
+
+/obj/effect/temp_visual/warp
+	name = "warp trace"
+	// duration = 0.9 SECONDS
+	randomdir = FALSE
+	duration = 100 SECONDS
+	var/mob/living/carbon/mod_wearer
+
+/obj/effect/temp_visual/warp/trail
+	duration = 0.9 SECONDS
+
+/obj/item/mod/module/warp
+	name = "warp module"
+	desc = "При активации переносит пользователя на 125 метров назад."
+	// icon_state = "warp"
+	module_type = MODULE_USABLE
+	idle_power_cost = DEFAULT_CHARGE_DRAIN
+	use_power_cost = DEFAULT_CHARGE_DRAIN * 10
+	removable = TRUE
+	incompatible_modules = list(/obj/item/mod/module/warp)
+	cooldown_time = 10 SECONDS
+	var/list/position_queue = list()
+	var/list/chaser_queue = list() // basically the same
+	var/warp_max_steps = 125
+	var/is_warping = FALSE
+	var/chase_timer = 3 SECONDS
+	var/chase_delay = 0.15 SECONDS
+	var/modified_chase_delay
+	/// multiplicative
+	var/chaser_timer_modifier = 0.7
+	// COOLDOWN_DECLARE(mod_warp_cooldown)
+
+/obj/item/mod/module/warp/proc/handle_position()
+	SIGNAL_HANDLER
+	if(chaser_queue[1][WARP_LOC] == mod.wearer.loc)
+		end_chase()
+	else
+		update_position()
+
+/obj/item/mod/module/warp/proc/update_position()
+	if(!isatom(mod.wearer.loc))
+		return
+
+	position_queue += list(list(mod.wearer.loc, mod.wearer.dir))
+
+	// Маленько щиткодный способ проявления прошлого шага.
+
+	var/obj/effect/temp_visual/warp/footprint = new /obj/effect/temp_visual/warp(mod.wearer.loc)
+
+	footprint.appearance = mod.wearer.appearance
+	footprint.alpha = 0
+	footprint.dir = mod.wearer.dir
+	footprint.mod_wearer = mod.wearer
+
+	chaser_queue += list(list(mod.wearer.loc, footprint))
+
+	if(chaser_queue.len != 1)
+		var/previous_step_num = chaser_queue.len-1
+		var/obj/effect/temp_visual/warp/previous_step = chaser_queue[previous_step_num][WARP_FOOTPRINT]
+		previous_step.alpha = 225
+		animate(previous_step, alpha = 100, time = 0.9 SECONDS)
+
+/obj/item/mod/module/warp/on_use()
+	if(!isatom(mod.wearer.loc))
+		return
+	if(is_warping)
+		return
+	var/area/A = get_area(mod.wearer.loc)
+	if(HAS_TRAIT(mod.wearer, TRAIT_NO_TELEPORT) || (A.area_flags & NOTELEPORT))
+		return
+	. = ..()
+	if(!.)
+		return
+	position_queue = list()
+	chaser_queue = list()
+	is_warping = TRUE
+	modified_chase_delay = chase_delay
+
+	RegisterSignal(mod.wearer, COMSIG_MOVABLE_MOVED,PROC_REF(update_position))//RegisterSignal(mod.wearer, COMSIG_MOVABLE_MOVED, PROC_REF(update_position))
+	update_position()
+	addtimer(CALLBACK(src,PROC_REF(chase)), chase_timer)
+
+/obj/item/mod/module/warp/proc/chase()
+	if(!is_warping)
+		end_chase()
+		return
+	if(!mod.wearer)
+		end_chase()
+		return
+	// Удаление тени и переход на следующий шаг
+	var/obj/effect/temp_visual/warp/old_shadow = chaser_queue[1]?[WARP_FOOTPRINT]
+	qdel(old_shadow)
+	chaser_queue.Cut(1, 2)
+
+	// Действия в новом шагу
+	if(!chaser_queue[1]?[WARP_LOC] || !isturf(chaser_queue[1]?[WARP_LOC]))
+		return
+	if(mod.wearer.loc == chaser_queue[1]?[WARP_LOC])
+		end_chase()
+		return
+	var/obj/effect/temp_visual/warp/temp = chaser_queue[1]?[WARP_FOOTPRINT]
+	temp.alpha = 255
+	temp.color = "blue"
+	modified_chase_delay = chase_delay*chaser_timer_modifier
+	// Продолжает цикл через н-ное время
+	addtimer(CALLBACK(src,PROC_REF(chase)), modified_chase_delay)
+
+/obj/item/mod/module/warp/proc/end_chase()
+	teleport_owner()
+	do_teleport_effects()
+	clear_positions()
+
+	// position_queue = null
+	// chaser_queue = null
+	is_warping = FALSE
+	modified_chase_delay = chase_delay
+	UnregisterSignal(mod.wearer, COMSIG_MOVABLE_MOVED)
+	COOLDOWN_START(src, cooldown_timer, cooldown_time)
+
+/obj/item/mod/module/warp/proc/clear_positions()
+	while(chaser_queue.len)
+		var/obj/effect/temp_visual/warp/temp = chaser_queue[1]?[WARP_FOOTPRINT]
+		qdel(temp)
+		chaser_queue.Cut(1, 2)
+	position_queue = list()
+	chaser_queue = list()
+	// update_position()
+
+/obj/item/mod/module/warp/proc/do_teleport_effects()
+	#warn рантаймит?
+	var/delta_alpha = round(225 / position_queue.len)
+	var/latest_alpha = 225
+
+	while(position_queue.len)
+		var/list/data = position_queue[1]
+		position_queue.Cut(1, 2)
+
+		if(!data?[WARP_LOC] || !isturf(data?[WARP_LOC]))
+			continue
+
+		// var/obj/effect/temp_visual/warp/temp = new /obj/effect/temp_visual/warp(data[WARP_LOC])
+		var/obj/effect/temp_visual/warp/trail/temp = new /obj/effect/temp_visual/warp/trail(data[WARP_LOC])
+		temp.alpha = latest_alpha
+		temp.appearance = mod.wearer.appearance
+		temp.dir = data?[WARP_DIR] ? data?[WARP_DIR] : mod.wearer.dir
+		latest_alpha -= delta_alpha
+
+		animate(temp, alpha = 0, time = 0.9 SECONDS)
+		// QDEL_IN_STOPPABLE(temp, 0.9 SECONDS)
+		// addtimer(CALLBACK(temp, PROC_REF(qdel)), 0.95 SECONDS)
+
+/obj/item/mod/module/warp/proc/teleport_owner()
+	// +- рабочее
+	// while для случая того, что человек может телепортироваться вообще
+	while(position_queue.len)// while(position_queue.count)
+		// var/list/data = position_queue.dequeue()
+		var/list/data = position_queue[1]
+		position_queue.Cut(1, 2)
+
+		if(!data?[WARP_LOC])
+			continue
+		if(!do_teleport(mod.wearer, data[WARP_LOC]))
+			continue
+		mod.wearer.dir = data?[WARP_DIR] ? data?[WARP_DIR] : mod.wearer.dir
+		return
+	mod.wearer.balloon_alert(mod.wearer, "ошибка телепортации!")
+
+#undef WARP_LOC
+#undef WARP_DIR
+#undef WARP_FOOTPRINT
+
+/*
+//Indexes for the queue
+#define WARP_LOC 1
+#define WARP_DIR 2
+
+/obj/effect/temp_visual/warp
+	name = "warp trace"
+	duration = 0.9 SECONDS
+	randomdir = FALSE
+
+/obj/item/mod/module/warp
+	name = "warp module"
+	desc = "При активации переносит пользователя на 125 метров назад."
+	// icon_state = "warp"
+	module_type = MODULE_USABLE
+	idle_power_cost = DEFAULT_CHARGE_DRAIN
+	use_power_cost = DEFAULT_CHARGE_DRAIN * 10
+	removable = TRUE
+	incompatible_modules = list(/obj/item/mod/module/warp)
+	cooldown_time = 10 SECONDS
+	// STATIC_COOLDOWN_DECLARE(cooldown)
+	var/list/position_queue = list()
+	var/warp_max_steps = 125
+
+/obj/item/mod/module/warp/on_suit_activation()
+	position_queue = list() // position_queue = new()
+	RegisterSignal(mod.wearer, COMSIG_MOVABLE_MOVED,PROC_REF(update_position))//RegisterSignal(mod.wearer, COMSIG_MOVABLE_MOVED, PROC_REF(update_position))
+	update_position()
+
+/obj/item/mod/module/warp/on_suit_deactivation(deleting = FALSE)
+	position_queue = null
+	UnregisterSignal(mod.wearer, COMSIG_MOVABLE_MOVED)
+
+/obj/item/mod/module/warp/proc/update_position(mob/user)
+	SIGNAL_HANDLER
+	if(!isatom(mod.wearer.loc))
+		return
+
+	inject_position(mod.wearer.loc)
+
+/obj/item/mod/module/warp/proc/inject_position(atom/new_loc)
+	if(!new_loc)
+		return
+	// var/test = position_queue.len
+	#warn не удаляет
+	if(position_queue.len >= warp_max_steps)
+		position_queue.Cut(1, 2) // position_queue.dequeue()
+
+	position_queue += list(list(new_loc, mod.wearer.dir)) // position_queue.enqueue(list(new_loc, mod.wearer.dir))
+
+/obj/item/mod/module/warp/proc/clear_positions()
+	// плохо работает
+	position_queue = list() // position_queue = new()
+	update_position()
+
+/obj/item/mod/module/warp/proc/do_teleport_effects()
+	// не работает
+	var/delta_alpha = 1
+	#warn рантаймит
+	// var/delta_alpha = round(225 / position_queue.len)
+	var/latest_alpha = 225
+
+	while(position_queue.len) //while(position_queue.count)
+		//var/list/data = position_queue.dequeue()
+		var/test = position_queue.len
+		var/list/data = position_queue[1]
+		position_queue.Cut(1, 2)
+
+		if(!data?[WARP_LOC] || !isturf(data?[WARP_LOC]))
+			continue
+
+		var/obj/effect/temp_visual/warp/temp = new /obj/effect/temp_visual/warp(data[WARP_LOC])
+		temp.alpha = latest_alpha
+		temp.appearance = mod.wearer.appearance
+		temp.dir = data?[WARP_DIR] ? data?[WARP_DIR] : mod.wearer.dir
+		latest_alpha -= delta_alpha
+
+		animate(temp, alpha = 0, time = 0.9 SECONDS)
+
+/obj/item/mod/module/warp/proc/teleport_owner()
+	// +- рабочее
+	while(position_queue.len)// while(position_queue.count)
+		// var/list/data = position_queue.dequeue()
+		var/list/data = position_queue[1]
+		position_queue.Cut(1, 2)
+
+		if(!data?[WARP_LOC])
+			continue
+		if(!do_teleport(mod.wearer, data[WARP_LOC]))
+			continue
+		mod.wearer.dir = data?[WARP_DIR] ? data?[WARP_DIR] : mod.wearer.dir
+		return
+	#warn при первом использовании пишет ошибку телепортации, далее, кажется, сохраняет только этот труф
+	mod.wearer.balloon_alert(mod.wearer, "ошибка телепортации!")
+
+/obj/item/mod/module/warp/on_use()
+	. = ..()
+	if(!.)
+		return
+	/*
+	if(!COOLDOWN_FINISHED(src, cooldown))
+		mod.wearer.balloon_alert(mod.wearer, "перезарядка!")
+		return
+	*/
+	teleport_owner()
+	do_teleport_effects()
+	clear_positions()
+	// COOLDOWN_START(src, cooldown, 30 SECONDS)
+
+#undef WARP_LOC
+#undef WARP_DIR
+*/

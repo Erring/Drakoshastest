@@ -1,5 +1,57 @@
 //Supply modules for MODsuits
 
+/obj/item/mod/module/hydraulic
+	name = "модуль погрузочных гидравлических рук"
+	desc = "Пара мощных гидравлических рук, установленных в скафандр"
+	icon_state = "launch_loader"
+	module_type = MODULE_ACTIVE
+	removable = FALSE
+	use_power_cost = DEFAULT_CHARGE_DRAIN*10
+	incompatible_modules = list(/obj/item/mod/module/hydraulic)
+	cooldown_time = 4 SECONDS
+	overlay_state_inactive = "module_hydraulic"
+	overlay_state_active = "module_hydraulic_active"
+	use_mod_colors = TRUE
+	/// Time it takes to launch
+	var/launch_time = 2 SECONDS
+	/// User overlay
+	var/mutable_appearance/lightning
+
+/obj/item/mod/module/hydraulic/on_select_use(atom/target)
+	. = ..()
+	if(!.)
+		return
+	var/atom/game_renderer = mod.wearer.hud_used.plane_masters["[RENDER_PLANE_GAME]"]
+	var/matrix/render_matrix = matrix(game_renderer.transform)
+	render_matrix.Scale(1.25, 1.25)
+	animate(game_renderer, launch_time, flags = SINE_EASING|EASE_IN, transform = render_matrix)
+	var/current_time = world.time
+	mod.wearer.visible_message(span_warning("[mod.wearer] заряжает гидравлические руки!"), \
+		blind_message = span_hear("Где-то раздаётся звук зарядки."))
+	playsound(src, 'sound/items/modsuit/loader_charge.ogg', 75, TRUE)
+	lightning = mutable_appearance('icons/effects/effects.dmi', "electricity3", /*offset_spokesman = src,*/ plane = GAME_PLANE_FOV_HIDDEN)
+	mod.wearer.add_overlay(lightning)
+	balloon_alert(mod.wearer, "Начинаю зарядку...")
+	var/power = launch_time
+	if(!do_after(mod.wearer, launch_time, target = mod))
+		power = world.time - current_time
+		animate(game_renderer)
+	drain_power(use_power_cost)
+	new /obj/effect/temp_visual/mook_dust(get_turf(src))
+	playsound(src, 'sound/items/modsuit/loader_launch.ogg', 75, TRUE)
+	game_renderer.transform = game_renderer.transform.Scale(0.8, 0.8)
+	mod.wearer.cut_overlay(lightning)
+	var/angle = get_angle(mod.wearer, target)
+	mod.wearer.transform = mod.wearer.transform.Turn(angle)
+	mod.wearer.throw_at(get_ranged_target_turf_direct(mod.wearer, target, power), \
+		range = power, speed = max(round(0.2*power), 1), thrower = mod.wearer, spin = FALSE, \
+		callback = CALLBACK(src, .proc/on_throw_end, mod.wearer, -angle))
+
+/obj/item/mod/module/hydraulic/proc/on_throw_end(mob/user, angle)
+	if(!user)
+		return
+	user.transform = user.transform.Turn(angle)
+
 /obj/item/mod/module/ash_accretion
 	name = "MOD ash accretion module"
 	desc = "A module that collects ash from the terrain, covering the suit in a protective layer, this layer is \

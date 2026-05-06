@@ -139,7 +139,7 @@
 	id = "mod_military"
 	display_name = "MOD military-grade power armor components"
 	description = "WARNING: it requires faction-locked unfinished plates to produce anything meaningful. Cutting-Edge military-grade biomimetic modular power armor components right into your protolathe! Core technologies integrated into this component include: Ultra-compact, liquid-cooled, reinforced serial elasticity actuators. Biomimetic Programmable metamaterial mechanics. Electroactive polymers."
-	prereq_ids = list("mod_science", "mod_engi_adv", "anomaly_research", "mod_security")
+	prereq_ids = list("mod_science", "mod_engi", "anomaly_research", "mod_security")
 	design_ids = list(
 		"mod_armor_components",
 	)
